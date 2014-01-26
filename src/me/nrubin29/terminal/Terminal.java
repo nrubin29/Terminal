@@ -4,13 +4,15 @@ import me.nrubin29.terminal.fs.FileSystem;
 import me.nrubin29.terminal.gui.GUI;
 import me.nrubin29.terminal.level.tutorial.Tutorial;
 
-public class Game {
+public class Terminal {
 
-    private Game() { }
+    public static final String VERSION = "0.0.1";
 
-    private static Game instance = new Game();
+    private Terminal() { }
 
-    public static Game getInstance() {
+    private static Terminal instance = new Terminal();
+
+    public static Terminal getInstance() {
         return instance;
     }
 
@@ -39,6 +41,6 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        Game.getInstance().setup();
+        Terminal.getInstance().setup();
     }
 }

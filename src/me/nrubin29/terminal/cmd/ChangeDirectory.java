@@ -1,21 +1,21 @@
 package me.nrubin29.terminal.cmd;
 
-import me.nrubin29.terminal.gui.GUI;
-import me.nrubin29.terminal.Game;
-import me.nrubin29.terminal.server.ServerManager;
+import me.nrubin29.terminal.Terminal;
 import me.nrubin29.terminal.fs.FileSystem;
 import me.nrubin29.terminal.fs.FileSystemObject;
 import me.nrubin29.terminal.fs.Folder;
+import me.nrubin29.terminal.gui.GUI;
+import me.nrubin29.terminal.server.ServerManager;
 
 public class ChangeDirectory extends Command {
 
     public ChangeDirectory() {
-        super("cd");
+        super("cd", "Change your working directory.");
     }
 
     public void run(String[] args) {
         if (args.length == 0) {
-            Game.getInstance().getGUI().write("You must specify a folder name or .. to go to the current folder's parent.", GUI.MessageType.BAD);
+            Terminal.getInstance().getGUI().write("You must specify a folder name or .. to go to the current folder's parent.", GUI.MessageType.BAD);
             return;
         }
 
@@ -24,7 +24,7 @@ public class ChangeDirectory extends Command {
 
         if (to.equals("..")) {
             if (fs.getCurrentFolder().getParent() == null) {
-                Game.getInstance().getGUI().write("Current folder does not have parent.", GUI.MessageType.BAD);
+                Terminal.getInstance().getGUI().write("Current folder does not have parent.", GUI.MessageType.BAD);
                 return;
             }
 
@@ -39,13 +39,13 @@ public class ChangeDirectory extends Command {
                 }
 
                 else {
-                    Game.getInstance().getGUI().write("Attempted to change directory to file.", GUI.MessageType.BAD);
+                    Terminal.getInstance().getGUI().write("Attempted to change directory to file.", GUI.MessageType.BAD);
                 }
 
                 return;
             }
         }
 
-        Game.getInstance().getGUI().write("Could not find folder with name " + to + ".", GUI.MessageType.BAD);
+        Terminal.getInstance().getGUI().write("Could not find folder with name " + to + ".", GUI.MessageType.BAD);
     }
 }

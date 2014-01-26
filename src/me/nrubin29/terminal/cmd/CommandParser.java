@@ -1,7 +1,7 @@
 package me.nrubin29.terminal.cmd;
 
+import me.nrubin29.terminal.Terminal;
 import me.nrubin29.terminal.gui.GUI;
-import me.nrubin29.terminal.Game;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,16 +16,20 @@ public class CommandParser {
         return instance;
     }
 
-    private ArrayList<Command> cmds = new ArrayList<Command>();
+    private ArrayList<Command> cmds = new ArrayList<>();
 
     public void setup() {
+        cmds.add(new About());
         cmds.add(new Cat());
         cmds.add(new ChangeDirectory());
         cmds.add(new Disconnect());
         cmds.add(new Download());
+        cmds.add(new Help());
         cmds.add(new List());
+        cmds.add(new News());
         cmds.add(new Send());
         cmds.add(new SSH());
+        cmds.add(new Update());
     }
 
     public void parse(String input) {
@@ -36,7 +40,7 @@ public class CommandParser {
         Command c = getCommand(cmd);
 
         if (c == null || !c.isEnabled()) {
-            Game.getInstance().getGUI().write("Invalid command.", GUI.MessageType.BAD);
+            Terminal.getInstance().getGUI().write("Invalid command.", GUI.MessageType.BAD);
         }
 
         else {
@@ -50,5 +54,9 @@ public class CommandParser {
         }
 
         return null;
+    }
+
+    protected Command[] getCommands() {
+        return cmds.toArray(new Command[cmds.size()]);
     }
 }

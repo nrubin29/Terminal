@@ -14,7 +14,7 @@ public abstract class Server {
     public Server(String ip) {
         this.ip = ip;
         this.fs = setupFS();
-        this.users = new ArrayList<String>();
+        this.users = new ArrayList<>();
     }
 
     public final boolean login(String username) {
@@ -37,5 +37,7 @@ public abstract class Server {
 
     public abstract void connect();
 
-    public abstract void disconnect();
+    public void disconnect() {
+
+    }
 }

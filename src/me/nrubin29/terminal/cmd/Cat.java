@@ -1,21 +1,21 @@
 package me.nrubin29.terminal.cmd;
 
-import me.nrubin29.terminal.gui.GUI;
-import me.nrubin29.terminal.Game;
-import me.nrubin29.terminal.server.ServerManager;
+import me.nrubin29.terminal.Terminal;
 import me.nrubin29.terminal.fs.File;
 import me.nrubin29.terminal.fs.FileSystem;
 import me.nrubin29.terminal.fs.FileSystemObject;
+import me.nrubin29.terminal.gui.GUI;
+import me.nrubin29.terminal.server.ServerManager;
 
 public class Cat extends Command {
 
     public Cat() {
-        super("cat");
+        super("cat", "Print the contents of a file.");
     }
 
     public void run(String[] args) {
         if (args.length == 0) {
-            Game.getInstance().getGUI().write("You must specify a file name.", GUI.MessageType.BAD);
+            Terminal.getInstance().getGUI().write("You must specify a file name.", GUI.MessageType.BAD);
             return;
         }
 
@@ -29,13 +29,13 @@ public class Cat extends Command {
                 }
 
                 else {
-                    Game.getInstance().getGUI().write("Attempted to read folder.", GUI.MessageType.BAD);
+                    Terminal.getInstance().getGUI().write("Attempted to read folder.", GUI.MessageType.BAD);
                 }
 
                 return;
             }
         }
 
-        Game.getInstance().getGUI().write("Could not find file with name " + file + ".", GUI.MessageType.BAD);
+        Terminal.getInstance().getGUI().write("Could not find file with name " + file + ".", GUI.MessageType.BAD);
     }
 }

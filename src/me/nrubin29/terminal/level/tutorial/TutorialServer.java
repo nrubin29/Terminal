@@ -1,6 +1,6 @@
 package me.nrubin29.terminal.level.tutorial;
 
-import me.nrubin29.terminal.Game;
+import me.nrubin29.terminal.Terminal;
 import me.nrubin29.terminal.Utils;
 import me.nrubin29.terminal.event.Event;
 import me.nrubin29.terminal.event.EventDispatcher;
@@ -27,7 +27,7 @@ public class TutorialServer extends Server {
                 if (e.getFile().getName().equals("hamburger.txt") && e.getTo().equals("validation@532.tutorial")) {
                     Utils.pause(Utils.SECOND);
 
-                    Game.getInstance().getGUI().write(
+                    Terminal.getInstance().getGUI().write(
                             "Congratulations, rookie. You have successfully completed training. Welcome aboard."
                             , GUI.MessageType.MESSAGE);
                 }
@@ -59,15 +59,11 @@ public class TutorialServer extends Server {
     }
 
     public void connect() {
-        Game.getInstance().getGUI().write(
+        Terminal.getInstance().getGUI().write(
                 "Good job so far. There is a file on this server that contains the next set of directions. " +
                 "You can use the ls command to list all files and folders in the current folder. " +
                 "You can use the cd command to change your working directory. " +
                 "You can use the cat command to print the contents of a file. Good luck, rookie."
                 , GUI.MessageType.MESSAGE);
-    }
-
-    public void disconnect() {
-        //Game.getInstance().getGUI().write("Thank you for visiting!", GUI.MessageType.NORMAL);
     }
 }

@@ -1,25 +1,25 @@
 package me.nrubin29.terminal.cmd;
 
-import me.nrubin29.terminal.gui.GUI;
-import me.nrubin29.terminal.Game;
-import me.nrubin29.terminal.server.ServerManager;
+import me.nrubin29.terminal.Terminal;
 import me.nrubin29.terminal.fs.FileSystem;
 import me.nrubin29.terminal.fs.FileSystemObject;
+import me.nrubin29.terminal.gui.GUI;
+import me.nrubin29.terminal.server.ServerManager;
 
 public class List extends Command {
 
     public List() {
-        super("ls");
+        super("ls", "List files in working directory.");
     }
 
     public void run(String[] args) {
         FileSystem fs;
 
         if (ServerManager.getInstance().getCurrentServer() != null) fs = ServerManager.getInstance().getCurrentServer().getFileSystem();
-        else fs = Game.getInstance().getLocalFS();
+        else fs = Terminal.getInstance().getLocalFS();
 
         for (FileSystemObject fso : fs.getCurrentFolder().getFiles()) {
-            if (!fso.isHidden()) Game.getInstance().getGUI().write(fso.getName(), GUI.MessageType.NORMAL);
+            if (!fso.isHidden()) Terminal.getInstance().getGUI().write(fso.getName(), GUI.MessageType.NORMAL);
         }
     }
 }
