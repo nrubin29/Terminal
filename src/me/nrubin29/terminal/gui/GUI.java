@@ -4,7 +4,8 @@ import me.nrubin29.terminal.Utils;
 import me.nrubin29.terminal.cmd.CommandParser;
 
 import javax.swing.*;
-import javax.swing.text.*;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -42,8 +43,6 @@ public class GUI extends JFrame {
         text.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
         text.setBackground(Color.BLACK);
         text.setCaretColor(Color.GREEN);
-        //text.setMinimumSize(new Dimension(640, 460));
-        //text.setMaximumSize(new Dimension(640, 460));
 
         input = new JTextField();
         input.setBorder(null);

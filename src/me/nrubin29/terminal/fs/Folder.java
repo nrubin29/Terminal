@@ -12,8 +12,8 @@ public class Folder extends FileSystemObject {
         super(name, parent);
     }
 
-    public final ArrayList<FileSystemObject> getFiles() {
-        return (ArrayList<FileSystemObject>) objs.clone();
+    public final FileSystemObject[] getFiles() {
+        return objs.toArray(new FileSystemObject[objs.size()]);
     }
 
     public final void addFileSystemObject(FileSystemObject fso) {

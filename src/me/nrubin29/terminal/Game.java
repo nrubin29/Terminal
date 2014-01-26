@@ -2,7 +2,7 @@ package me.nrubin29.terminal;
 
 import me.nrubin29.terminal.fs.FileSystem;
 import me.nrubin29.terminal.gui.GUI;
-import me.nrubin29.terminal.level.one.LevelOne;
+import me.nrubin29.terminal.level.tutorial.Tutorial;
 
 public class Game {
 
@@ -27,7 +27,7 @@ public class Game {
 
         gui.write("terminal booted successfully.", GUI.MessageType.NORMAL);
 
-        new LevelOne().start();
+        new Tutorial().start();
     }
 
     public GUI getGUI() {

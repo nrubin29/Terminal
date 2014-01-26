@@ -1,15 +1,11 @@
-package me.nrubin29.terminal.level.one;
+package me.nrubin29.terminal.level.tutorial;
 
-import me.nrubin29.terminal.gui.GUI;
 import me.nrubin29.terminal.Game;
-import me.nrubin29.terminal.server.ServerManager;
+import me.nrubin29.terminal.gui.GUI;
 import me.nrubin29.terminal.level.Level;
+import me.nrubin29.terminal.server.ServerManager;
 
-public class LevelOne extends Level {
-
-    public LevelOne() {
-        super(1);
-    }
+public class Tutorial extends Level {
 
     public void start() {
         ServerManager.getInstance().addServer(new TutorialServer());
@@ -20,9 +16,5 @@ public class LevelOne extends Level {
                 "The IP address is 532.tutorial. The username is my favorite type of Italian food. " +
                 "You can use the SSH command to connect to the server. Good luck, rookie."
                 , GUI.MessageType.MESSAGE);
-    }
-
-    public void stop() {
-
     }
 }

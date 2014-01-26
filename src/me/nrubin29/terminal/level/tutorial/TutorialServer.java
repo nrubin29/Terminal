@@ -1,4 +1,4 @@
-package me.nrubin29.terminal.level.one;
+package me.nrubin29.terminal.level.tutorial;
 
 import me.nrubin29.terminal.Game;
 import me.nrubin29.terminal.Utils;
