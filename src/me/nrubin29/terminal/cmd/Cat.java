@@ -14,7 +14,7 @@ public class Cat extends Command {
 
     public void run(String[] args) {
         if (args.length == 0) {
-            Terminal.getInstance().write("You must specify a file name.", Terminal.MessageType.BAD);
+            Terminal.getInstance().write("Usage: cat filename", Terminal.MessageType.BAD);
             return;
         }
 

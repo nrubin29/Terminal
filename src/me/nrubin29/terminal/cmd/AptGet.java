@@ -21,7 +21,7 @@ public class AptGet extends Command {
         }
 
         if (args.length == 0) {
-            Terminal.getInstance().write("You must specify a program name.", Terminal.MessageType.BAD);
+            Terminal.getInstance().write("Usage: apt-get program", Terminal.MessageType.BAD);
             return;
         }
 

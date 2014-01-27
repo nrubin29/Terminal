@@ -61,9 +61,6 @@ public class LevelManager {
         return foundLevel;
     }
 
-    /*
-    TODO: Level selection at start.
-     */
     public void nextLevel() {
         if (currentLevel != null) currentLevel.stop();
 

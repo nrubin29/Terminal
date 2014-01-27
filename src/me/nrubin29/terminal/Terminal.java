@@ -41,7 +41,7 @@ public class Terminal extends JFrame {
 		return instance;
 	}
 	
-	public static String VERSION = "g1s1";
+	public static final String VERSION = "g3s2";
 
     private JTextPane text;
     private Filter f = new Filter();
@@ -49,7 +49,7 @@ public class Terminal extends JFrame {
     private String lastInput;
 
     private Terminal() {
-        super("terminal");
+        super("terminal version " + VERSION);
 
         text = new JTextPane();
         text.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));

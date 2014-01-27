@@ -7,13 +7,11 @@ public class Ping extends Command {
 
     public Ping() {
         super("ping", "Ping a website.");
-
-        //ips.put("dod.gov", "284.dod");
     }
 
     public void run(String[] args) {
         if (args.length == 0) {
-            Terminal.getInstance().write("You must specify a URL.", Terminal.MessageType.BAD);
+            Terminal.getInstance().write("Usage: ping url", Terminal.MessageType.BAD);
             return;
         }
 

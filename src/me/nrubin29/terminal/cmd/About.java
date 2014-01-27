@@ -19,6 +19,6 @@ public class About extends Command {
         Terminal.getInstance().write(" |  |___ |__/ |\\/| | |\\ | |__| |", Terminal.MessageType.NORMAL);
         Terminal.getInstance().write(" |  |___ |  \\ |  | | | \\| |  | |___", Terminal.MessageType.NORMAL);
         Terminal.getInstance().write("", Terminal.MessageType.NORMAL);
-        Terminal.getInstance().write("by Noah Rubin - v" + Terminal.VERSION, Terminal.MessageType.NORMAL);
+        Terminal.getInstance().write("by Noah Rubin - Version " + Terminal.VERSION, Terminal.MessageType.NORMAL);
     }
 }

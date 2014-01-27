@@ -19,7 +19,7 @@ public class Web extends Command {
         }
 
         if (args.length == 0) {
-            Terminal.getInstance().write("You must specify a website.", Terminal.MessageType.BAD);
+            Terminal.getInstance().write("Usage: web url", Terminal.MessageType.BAD);
             return;
         }
 

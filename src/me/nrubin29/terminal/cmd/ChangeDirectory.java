@@ -14,7 +14,7 @@ public class ChangeDirectory extends Command {
 
     public void run(String[] args) {
         if (args.length == 0) {
-            Terminal.getInstance().write("You must specify a folder name or .. to go to the current folder's parent.", Terminal.MessageType.BAD);
+            Terminal.getInstance().write("Usage: cd foldername or .. to go to the current folder's parent.", Terminal.MessageType.BAD);
             return;
         }
 

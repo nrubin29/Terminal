@@ -15,7 +15,7 @@ public class Nano extends Command {
 
     public void run(String[] args) {
         if (args.length < 2) {
-            Terminal.getInstance().write("You must specify a file name and next text.", Terminal.MessageType.BAD);
+            Terminal.getInstance().write("Usage: nano filename newtext", Terminal.MessageType.BAD);
             return;
         }
 
