@@ -1,7 +1,9 @@
-package me.nrubin29.terminal.level.tutorial;
+package me.nrubin29.terminal.level.one;
 
 import me.nrubin29.terminal.Terminal;
 import me.nrubin29.terminal.Utils;
+import me.nrubin29.terminal.cmd.AptGet;
+import me.nrubin29.terminal.cmd.CommandParser;
 import me.nrubin29.terminal.event.Event;
 import me.nrubin29.terminal.event.EventDispatcher;
 import me.nrubin29.terminal.event.Listener;
@@ -13,15 +15,14 @@ import me.nrubin29.terminal.gui.GUI;
 import me.nrubin29.terminal.level.LevelManager;
 import me.nrubin29.terminal.server.Server;
 
-public class TutorialServer extends Server {
+public class DoDServer extends Server {
 
-    public TutorialServer() {
-        super("532.tutorial");
+    public DoDServer() {
+        super("284.dod");
 
-        addUser("pasta");
-        addUser("validation");
+        addUser("govt");
 
-        Listener listener = new Listener(PlayerSendFileEvent.class) {
+        EventDispatcher.getInstance().registerListener(new Listener(PlayerSendFileEvent.class) {
             public void onEvent(Event event) {
                 PlayerSendFileEvent e = (PlayerSendFileEvent) event;
 
@@ -36,9 +37,7 @@ public class TutorialServer extends Server {
                     LevelManager.getInstance().nextLevel();
                 }
             }
-        };
-
-        EventDispatcher.getInstance().registerListener(listener);
+        });
     }
 
     public FileSystem setupFS() {
@@ -71,5 +70,19 @@ public class TutorialServer extends Server {
                 "You can use the cd command to change your working directory. " +
                 "You can use the cat command to print the contents of a file. Good luck, rookie. - N"
                 , GUI.MessageType.MESSAGE);
+    }
+
+    @Override
+    public boolean login(String user) {
+        boolean good = super.login(user);
+
+        if (!good) return good;
+
+        if (!((AptGet) (CommandParser.getInstance().getCommand("apt-get"))).isInstalled("bruteforce")) {
+            // Message
+            return false;
+        }
+
+        return true;
     }
 }

@@ -20,6 +20,7 @@ public class CommandParser {
 
     public void setup() {
         cmds.add(new About());
+        cmds.add(new AptGet());
         cmds.add(new Cat());
         cmds.add(new ChangeDirectory());
         cmds.add(new Disconnect());
@@ -27,6 +28,7 @@ public class CommandParser {
         cmds.add(new Help());
         cmds.add(new List());
         cmds.add(new News());
+        cmds.add(new Ping());
         cmds.add(new Send());
         cmds.add(new SSH());
         cmds.add(new Update());

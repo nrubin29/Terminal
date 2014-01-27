@@ -17,7 +17,7 @@ public abstract class Server {
         this.users = new ArrayList<>();
     }
 
-    public final boolean login(String username) {
+    public boolean login(String username) {
         return users.contains(username);
     }
 

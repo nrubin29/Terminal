@@ -23,14 +23,6 @@ public class Terminal {
         this.gui = new GUI();
         this.localFS = new FileSystem();
 
-        gui.write("booting terminal...", GUI.MessageType.NORMAL);
-
-        Utils.pause(Utils.SECOND);
-
-        gui.write("terminal booted successfully.", GUI.MessageType.NORMAL);
-
-        Utils.pause(Utils.SECOND);
-
         LevelManager.getInstance().nextLevel();
     }
 

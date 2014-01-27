@@ -75,7 +75,7 @@ public class GUI extends JFrame {
         setVisible(true);
     }
 
-    public void write(String txt, MessageType t, boolean newLine) {
+    public void write(String txt, MessageType t) {
         text.setFocusable(false);
 
         ((AbstractDocument) text.getDocument()).setDocumentFilter(null);
@@ -86,7 +86,7 @@ public class GUI extends JFrame {
                 text.getDocument().insertString(text.getDocument().getLength(), String.valueOf(c), t.getAttributes());
                 Utils.pause(20);
             }
-            if (newLine) text.getDocument().insertString(text.getDocument().getLength(), "\n", null);
+            text.getDocument().insertString(text.getDocument().getLength(), "\n", null);
         }
         catch (Exception ex) { ex.printStackTrace(); }
 
@@ -94,17 +94,8 @@ public class GUI extends JFrame {
         text.setEditable(true);
         setCaret();
 
-        //setFocusable(false);
-        //setFocusable(true);
-        //requestFocus();
-        //text.requestFocusInWindow();
-
         text.setFocusable(true);
         text.requestFocusInWindow();
-    }
-
-    public void write(String txt, MessageType t) {
-        write(txt, t, true);
     }
 
     private class Filter extends DocumentFilter {

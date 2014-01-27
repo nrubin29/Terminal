@@ -5,13 +5,9 @@ public class FileSystem {
     private final Folder rootFolder;
     private Folder currentFolder;
 
-    public FileSystem(Folder rootFolder) {
-        this.rootFolder = rootFolder;
-        this.currentFolder = rootFolder;
-    }
-
     public FileSystem() {
-        this(new Folder("root", null));
+        this.rootFolder = new Folder("root", null);
+        this.currentFolder = rootFolder;
     }
 
     public Folder getRootFolder() {
