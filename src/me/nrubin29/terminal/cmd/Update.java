@@ -2,7 +2,6 @@ package me.nrubin29.terminal.cmd;
 
 import me.nrubin29.terminal.Terminal;
 import me.nrubin29.terminal.Utils;
-import me.nrubin29.terminal.gui.GUI;
 import me.nrubin29.terminal.server.ServerManager;
 
 import java.io.File;
@@ -19,14 +18,14 @@ public class Update extends Command {
 
     public void run(String[] args) {
         if (ServerManager.getInstance().getCurrentServer() != null) {
-            Terminal.getInstance().getGUI().write("You can only use this command on your localhost.", GUI.MessageType.BAD);
+            Terminal.getInstance().write("You can only use this command on your localhost.", Terminal.MessageType.BAD);
             return;
         }
 
         String version = Utils.readRemoteFile("version").get(0);
 
         if (!version.equals(Terminal.VERSION)) {
-            Terminal.getInstance().getGUI().write("Found new version! Beginning download...", GUI.MessageType.NORMAL);
+            Terminal.getInstance().write("Found new version! Beginning download...", Terminal.MessageType.NORMAL);
 
             try {
                 File jar = new File(getClass().getProtectionDomain().getCodeSource().getLocation().getFile());
@@ -37,7 +36,7 @@ public class Update extends Command {
                 fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
                 fos.close();
 
-                Terminal.getInstance().getGUI().write("Download successful! Quitting in five seconds...", GUI.MessageType.GOOD);
+                Terminal.getInstance().write("Download successful! Quitting in five seconds...", Terminal.MessageType.GOOD);
 
                 Utils.pause(Utils.SECOND * 5);
 
@@ -45,10 +44,10 @@ public class Update extends Command {
             }
 
             catch (Exception e) {
-                Terminal.getInstance().getGUI().write("An error occurred while downloading the update.", GUI.MessageType.BAD);
+                Terminal.getInstance().write("An error occurred while downloading the update.", Terminal.MessageType.BAD);
             }
         }
 
-        else Terminal.getInstance().getGUI().write("You are up to date.", GUI.MessageType.GOOD);
+        else Terminal.getInstance().write("You are up to date.", Terminal.MessageType.GOOD);
     }
 }

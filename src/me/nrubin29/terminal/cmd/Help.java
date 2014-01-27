@@ -1,7 +1,6 @@
 package me.nrubin29.terminal.cmd;
 
 import me.nrubin29.terminal.Terminal;
-import me.nrubin29.terminal.gui.GUI;
 
 public class Help extends Command {
 
@@ -12,7 +11,7 @@ public class Help extends Command {
     public void run(String[] args) {
         for (Command c : CommandParser.getInstance().getCommands()) {
             if (c.isEnabled()) {
-                Terminal.getInstance().getGUI().write(c.getName() + " - " + c.getDescription(), GUI.MessageType.NORMAL);
+                Terminal.getInstance().write(c.getName() + " - " + c.getDescription(), Terminal.MessageType.NORMAL);
             }
         }
     }

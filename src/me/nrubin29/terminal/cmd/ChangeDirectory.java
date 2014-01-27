@@ -4,7 +4,6 @@ import me.nrubin29.terminal.Terminal;
 import me.nrubin29.terminal.fs.FileSystem;
 import me.nrubin29.terminal.fs.FileSystemObject;
 import me.nrubin29.terminal.fs.Folder;
-import me.nrubin29.terminal.gui.GUI;
 import me.nrubin29.terminal.server.ServerManager;
 
 public class ChangeDirectory extends Command {
@@ -15,16 +14,16 @@ public class ChangeDirectory extends Command {
 
     public void run(String[] args) {
         if (args.length == 0) {
-            Terminal.getInstance().getGUI().write("You must specify a folder name or .. to go to the current folder's parent.", GUI.MessageType.BAD);
+            Terminal.getInstance().write("You must specify a folder name or .. to go to the current folder's parent.", Terminal.MessageType.BAD);
             return;
         }
 
-        FileSystem fs = ServerManager.getInstance().getCurrentServer().getFileSystem();
+        FileSystem fs = ServerManager.getInstance().getCurrentFS();
         String to = args[0];
 
         if (to.equals("..")) {
             if (fs.getCurrentFolder().getParent() == null) {
-                Terminal.getInstance().getGUI().write("Current folder does not have parent.", GUI.MessageType.BAD);
+                Terminal.getInstance().write("Current folder does not have parent.", Terminal.MessageType.BAD);
                 return;
             }
 
@@ -39,13 +38,13 @@ public class ChangeDirectory extends Command {
                 }
 
                 else {
-                    Terminal.getInstance().getGUI().write("Attempted to change directory to file.", GUI.MessageType.BAD);
+                    Terminal.getInstance().write("Attempted to change directory to file.", Terminal.MessageType.BAD);
                 }
 
                 return;
             }
         }
 
-        Terminal.getInstance().getGUI().write("Could not find folder with name " + to + ".", GUI.MessageType.BAD);
+        Terminal.getInstance().write("Could not find folder with name " + to + ".", Terminal.MessageType.BAD);
     }
 }

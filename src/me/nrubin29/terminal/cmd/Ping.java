@@ -1,32 +1,28 @@
 package me.nrubin29.terminal.cmd;
 
 import me.nrubin29.terminal.Terminal;
-import me.nrubin29.terminal.gui.GUI;
-
-import java.util.HashMap;
+import me.nrubin29.terminal.web.WebManager;
 
 public class Ping extends Command {
 
     public Ping() {
         super("ping", "Ping a website.");
 
-        ips.put("dod.gov", "284.dod");
+        //ips.put("dod.gov", "284.dod");
     }
-
-    private HashMap<String, String> ips = new HashMap<String, String>();
 
     public void run(String[] args) {
         if (args.length == 0) {
-            Terminal.getInstance().getGUI().write("You must specify a URL.", GUI.MessageType.BAD);
+            Terminal.getInstance().write("You must specify a URL.", Terminal.MessageType.BAD);
             return;
         }
 
-        if (ips.containsKey(args[0])) {
-            Terminal.getInstance().getGUI().write("PING " + args[0] + " (" + ips.get(args[0] + "): SUCCESS."), GUI.MessageType.NORMAL);
+        if (WebManager.getInstance().exists(args[0])) {
+            Terminal.getInstance().write("PING " + args[0] + " (" + WebManager.getInstance().getWebsite(args[0]).getIP() + "): SUCCESS.", Terminal.MessageType.GOOD);
         }
 
         else {
-            Terminal.getInstance().getGUI().write("PING " + args[0] + ": FAILED.", GUI.MessageType.NORMAL);
+            Terminal.getInstance().write("PING " + args[0] + ": FAILED.", Terminal.MessageType.BAD);
         }
     }
 }

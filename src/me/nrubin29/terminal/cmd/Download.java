@@ -5,7 +5,6 @@ import me.nrubin29.terminal.Utils;
 import me.nrubin29.terminal.fs.File;
 import me.nrubin29.terminal.fs.FileSystemObject;
 import me.nrubin29.terminal.fs.Folder;
-import me.nrubin29.terminal.gui.GUI;
 import me.nrubin29.terminal.server.ServerManager;
 
 public class Download extends Command {
@@ -16,12 +15,12 @@ public class Download extends Command {
 
     public void run(String[] args) {
         if (args.length == 0) {
-            Terminal.getInstance().getGUI().write("Usage: download filename", GUI.MessageType.BAD);
+            Terminal.getInstance().write("Usage: download filename", Terminal.MessageType.BAD);
             return;
         }
 
         if (ServerManager.getInstance().getCurrentServer() == null) {
-            Terminal.getInstance().getGUI().write("You can only use the download command on servers.", GUI.MessageType.BAD);
+            Terminal.getInstance().write("You can only use the download command on servers.", Terminal.MessageType.BAD);
             return;
         }
 
@@ -31,23 +30,26 @@ public class Download extends Command {
         for (FileSystemObject fso : currentFolder.getFiles()) {
             if (fso.getName().equalsIgnoreCase(file)) {
                 if (fso instanceof File) {
-                    Terminal.getInstance().getGUI().write("Downloading file...", GUI.MessageType.NORMAL);
+                    Terminal.getInstance().write("Downloading file...", Terminal.MessageType.NORMAL);
 
                     Utils.pause(Utils.SECOND);
 
-                    Terminal.getInstance().getLocalFS().getRootFolder().addFileSystemObject(fso);
+                    /*
+                     * TODO: Remove this file.
+                     */
+                    ServerManager.getInstance().getLocalFS().getRootFolder().addFileSystemObject(fso);
 
-                    Terminal.getInstance().getGUI().write("Download successful.", GUI.MessageType.GOOD);
+                    Terminal.getInstance().write("Download successful.", Terminal.MessageType.GOOD);
                 }
 
                 else {
-                    Terminal.getInstance().getGUI().write("Cannot download folder.", GUI.MessageType.BAD);
+                    Terminal.getInstance().write("Cannot download folder.", Terminal.MessageType.BAD);
                 }
 
                 return;
             }
         }
 
-        Terminal.getInstance().getGUI().write("Could not find file " + file + ".", GUI.MessageType.BAD);
+        Terminal.getInstance().write("Could not find file " + file + ".", Terminal.MessageType.BAD);
     }
 }

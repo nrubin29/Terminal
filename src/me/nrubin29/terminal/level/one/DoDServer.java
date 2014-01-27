@@ -6,12 +6,12 @@ import me.nrubin29.terminal.cmd.AptGet;
 import me.nrubin29.terminal.cmd.CommandParser;
 import me.nrubin29.terminal.event.Event;
 import me.nrubin29.terminal.event.EventDispatcher;
+import me.nrubin29.terminal.event.FileSendEvent;
 import me.nrubin29.terminal.event.Listener;
-import me.nrubin29.terminal.event.PlayerSendFileEvent;
 import me.nrubin29.terminal.fs.File;
 import me.nrubin29.terminal.fs.FileSystem;
 import me.nrubin29.terminal.fs.Folder;
-import me.nrubin29.terminal.gui.GUI;
+import me.nrubin29.terminal.fs.TextFile;
 import me.nrubin29.terminal.level.LevelManager;
 import me.nrubin29.terminal.server.Server;
 
@@ -22,18 +22,18 @@ public class DoDServer extends Server {
 
         addUser("govt");
 
-        EventDispatcher.getInstance().registerListener(new Listener(PlayerSendFileEvent.class) {
+        EventDispatcher.getInstance().registerListener(new Listener(FileSendEvent.class) {
             public void onEvent(Event event) {
-                PlayerSendFileEvent e = (PlayerSendFileEvent) event;
+                FileSendEvent e = (FileSendEvent) event;
 
                 if (e.getFile().getName().equals("hamburger.txt") && e.getTo().equals("validation@532.tutorial")) {
                     Utils.pause(Utils.SECOND);
 
-                    Terminal.getInstance().getGUI().write(
+                    Terminal.getInstance().write(
                             "Congratulations, rookie. You have successfully completed training. Welcome aboard. - N"
-                            , GUI.MessageType.MESSAGE);
+                            , Terminal.MessageType.MESSAGE);
 
-                    EventDispatcher.getInstance().unregisterListener(this);
+                    requestRemove();
                     LevelManager.getInstance().nextLevel();
                 }
             }
@@ -43,46 +43,62 @@ public class DoDServer extends Server {
     public FileSystem setupFS() {
         FileSystem fs = new FileSystem();
 
-        Folder folder = new Folder("files", fs.getRootFolder());
+            Folder var = new Folder("var", fs.getRootFolder());
+                Folder www = new Folder("www", var);
+                    new Index(www);
+                new Folder("mail", var);
 
-        File.createTextFile("instructions.txt", folder,
-                "You're really getting the hang of this. We've hidden a file in this folder that we need you to download. " +
-                "It's a text file. It is named after my favorite American food. Read the file for information about downloading. " +
-                "Off you go. - N"
-                );
+            Folder usr = new Folder("usr", fs.getRootFolder());
+                Folder include = new Folder("include", usr);
+                    Folder video = new Folder("video", include);
+                        new TextFile("hfw.h", video, "printf(\"Hello World\\n\");");
 
-        File hidden = File.createTextFile("hamburger.txt", folder,
-                "Glad we hired you. You're pretty quick with this. Forgot to mention we're monitoring you, so don't try anything... " +
-                "Now that you found the file, use the download command to download it. " +
-                "Once you have the file, disconnect with the disconnect command. Finally, send the file to validation@532.tutorial. " +
-                "As always, good luck. - N"
-        );
+            Folder sys = new Folder("sys", fs.getRootFolder());
+                Folder kernel = new Folder("kernet", sys);
+                    new TextFile("exec", kernel, "Dbdbe3cd8987268989bYbG&F&F*FS&Yvyqfd78q2d27YU&F&Df7*fgdUYGFDu7eg28geiuwqwfh19372h!hdihd");
 
-        hidden.setHidden(true);
+            Folder root = new Folder("root", fs.getRootFolder());
+                new TextFile("perms.txt", root, "You do not have permission to view the files in this folder.");
+
+            Folder home = new Folder("home", fs.getRootFolder());
+                Folder dod = new Folder("dod", home);
+                    Folder documents = new Folder("documents", dod);
+                        new TextFile("story.txt", documents, "Once upon a time... the end.");
+                    File hidden = new TextFile("hidden.txt", dod, "How did you find me? Lucky guess?"); hidden.setHidden(true);
 
         return fs;
     }
 
     public void connect() {
-        Terminal.getInstance().getGUI().write(
-                "Good job so far. There is a file on this server that contains the next set of directions. " +
-                "You can use the ls command to list all files and folders in the current folder. " +
-                "You can use the cd command to change your working directory. " +
-                "You can use the cat command to print the contents of a file. Good luck, rookie. - N"
-                , GUI.MessageType.MESSAGE);
+        Terminal.getInstance().write(
+                "You made it. Poke around here to find the index file of the website. If you have any knowledge of webservers, that should be a breeze. " +
+                "Once you find it, use the nano command to change the file. Once that's done, disconnect and use the web command to look at the website. " +
+                "Should be pretty easy for you. - N"
+                , Terminal.MessageType.MESSAGE);
     }
 
     @Override
     public boolean login(String user) {
         boolean good = super.login(user);
 
-        if (!good) return good;
+        if (!good) return false;
+
+        Terminal.getInstance().write("Please enter your password.", Terminal.MessageType.NORMAL);
+
+        Utils.pause(Utils.SECOND);
 
         if (!((AptGet) (CommandParser.getInstance().getCommand("apt-get"))).isInstalled("bruteforce")) {
-            // Message
+            Terminal.getInstance().write("Input timed out.", Terminal.MessageType.BAD);
             return false;
         }
 
-        return true;
+        else {
+            Terminal.getInstance().write("**********", Terminal.MessageType.USER);
+
+            Utils.pause(Utils.SECOND);
+
+            Terminal.getInstance().write("Password accepted.", Terminal.MessageType.GOOD);
+            return true;
+        }
     }
 }

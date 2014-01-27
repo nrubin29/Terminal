@@ -14,7 +14,7 @@ public abstract class Server {
     public Server(String ip) {
         this.ip = ip;
         this.fs = setupFS();
-        this.users = new ArrayList<>();
+        this.users = new ArrayList<String>();
     }
 
     public boolean login(String username) {

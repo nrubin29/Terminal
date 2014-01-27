@@ -1,7 +1,6 @@
 package me.nrubin29.terminal.cmd;
 
 import me.nrubin29.terminal.Terminal;
-import me.nrubin29.terminal.gui.GUI;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,7 +15,7 @@ public class CommandParser {
         return instance;
     }
 
-    private ArrayList<Command> cmds = new ArrayList<>();
+    private ArrayList<Command> cmds = new ArrayList<Command>();
 
     public void setup() {
         cmds.add(new About());
@@ -27,11 +26,13 @@ public class CommandParser {
         cmds.add(new Download());
         cmds.add(new Help());
         cmds.add(new List());
+        cmds.add(new Nano());
         cmds.add(new News());
         cmds.add(new Ping());
         cmds.add(new Send());
         cmds.add(new SSH());
         cmds.add(new Update());
+        cmds.add(new Web());
     }
 
     public void parse(String input) {
@@ -42,7 +43,7 @@ public class CommandParser {
         Command c = getCommand(cmd);
 
         if (c == null || !c.isEnabled()) {
-            Terminal.getInstance().getGUI().write("Invalid command.", GUI.MessageType.BAD);
+            Terminal.getInstance().write("Invalid command.", Terminal.MessageType.BAD);
         }
 
         else {

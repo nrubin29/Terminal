@@ -3,11 +3,10 @@ package me.nrubin29.terminal.cmd;
 import me.nrubin29.terminal.Terminal;
 import me.nrubin29.terminal.Utils;
 import me.nrubin29.terminal.event.EventDispatcher;
-import me.nrubin29.terminal.event.PlayerSendFileEvent;
+import me.nrubin29.terminal.event.FileSendEvent;
 import me.nrubin29.terminal.fs.File;
 import me.nrubin29.terminal.fs.FileSystemObject;
 import me.nrubin29.terminal.fs.Folder;
-import me.nrubin29.terminal.gui.GUI;
 import me.nrubin29.terminal.server.Server;
 import me.nrubin29.terminal.server.ServerManager;
 
@@ -19,59 +18,62 @@ public class Send extends Command {
 
     public void run(String[] args) {
         if (args.length < 2) {
-            Terminal.getInstance().getGUI().write("Usage: send filename user@server", GUI.MessageType.BAD);
+            Terminal.getInstance().write("Usage: send filename user@server", Terminal.MessageType.BAD);
             return;
         }
 
+        /*
+         * TODO: isOnLocalhost method.
+         */
         if (ServerManager.getInstance().getCurrentServer() != null) {
-            Terminal.getInstance().getGUI().write("You can only use the send command on your localhost.", GUI.MessageType.BAD);
+            Terminal.getInstance().write("You can only use the send command on your localhost.", Terminal.MessageType.BAD);
             return;
         }
 
         String file = args[0], email = args[1];
-        Folder currentFolder = Terminal.getInstance().getLocalFS().getCurrentFolder();
+        Folder currentFolder = ServerManager.getInstance().getLocalFS().getCurrentFolder();
 
         if (!email.contains("@")) {
-            Terminal.getInstance().getGUI().write("Invalid email address.", GUI.MessageType.BAD);
+            Terminal.getInstance().write("Invalid email address.", Terminal.MessageType.BAD);
             return;
         }
 
         for (FileSystemObject fso : currentFolder.getFiles()) {
             if (fso.getName().equalsIgnoreCase(file)) {
                 if (fso instanceof File) {
-                    Terminal.getInstance().getGUI().write("Validating email address " + email + ".", GUI.MessageType.NORMAL);
+                    Terminal.getInstance().write("Validating email address " + email + ".", Terminal.MessageType.NORMAL);
 
                     Utils.pause(Utils.SECOND);
 
                     Server s = ServerManager.getInstance().getServer(email.split("@")[1]);
 
                     if (s == null) {
-                        Terminal.getInstance().getGUI().write("Could not find server at IP " + email.split("@")[1] + ".", GUI.MessageType.BAD);
+                        Terminal.getInstance().write("Could not find server at IP " + email.split("@")[1] + ".", Terminal.MessageType.BAD);
                         return;
                     }
 
                     if (!s.login(email.split("@")[0])) {
-                        Terminal.getInstance().getGUI().write("Could not find user " + email.split("@")[0] + " on server.", GUI.MessageType.BAD);
+                        Terminal.getInstance().write("Could not find user " + email.split("@")[0] + " on server.", Terminal.MessageType.BAD);
                         return;
                     }
 
-                    Terminal.getInstance().getGUI().write("Validation successful. Sending file...", GUI.MessageType.NORMAL);
+                    Terminal.getInstance().write("Validation successful. Sending file...", Terminal.MessageType.NORMAL);
 
                     Utils.pause(Utils.SECOND);
 
-                    Terminal.getInstance().getGUI().write("File sent successfully.", GUI.MessageType.GOOD);
+                    Terminal.getInstance().write("File sent successfully.", Terminal.MessageType.GOOD);
 
-                    EventDispatcher.getInstance().callEvent(new PlayerSendFileEvent((File) fso, email));
+                    EventDispatcher.getInstance().callEvent(new FileSendEvent((File) fso, email));
                 }
 
                 else {
-                    Terminal.getInstance().getGUI().write("Cannot send folder.", GUI.MessageType.BAD);
+                    Terminal.getInstance().write("Cannot send folder.", Terminal.MessageType.BAD);
                 }
 
                 return;
             }
         }
 
-        Terminal.getInstance().getGUI().write("Could not find file " + file + ".", GUI.MessageType.BAD);
+        Terminal.getInstance().write("Could not find file " + file + ".", Terminal.MessageType.BAD);
     }
 }

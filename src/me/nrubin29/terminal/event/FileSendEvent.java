@@ -2,12 +2,12 @@ package me.nrubin29.terminal.event;
 
 import me.nrubin29.terminal.fs.File;
 
-public class PlayerSendFileEvent extends Event {
+public class FileSendEvent extends Event {
 
     private File file;
     private String to;
 
-    public PlayerSendFileEvent(File file, String to) {
+    public FileSendEvent(File file, String to) {
         this.file = file;
         this.to = to;
     }

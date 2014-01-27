@@ -1,10 +1,12 @@
 package me.nrubin29.terminal.server;
 
+import me.nrubin29.terminal.fs.FileSystem;
+
 import java.util.ArrayList;
 
 public class ServerManager {
 
-    private ServerManager() { }
+    private ServerManager() { setup(); }
 
     private static ServerManager instance = new ServerManager();
 
@@ -14,6 +16,21 @@ public class ServerManager {
 
     private Server currentServer;
     private ArrayList<Server> servers = new ArrayList<Server>();
+    
+    private FileSystem localFS;
+    
+    private void setup() {
+    	this.localFS = new FileSystem();
+    }
+
+    public FileSystem getCurrentFS() {
+        if (getCurrentServer() == null) return getLocalFS();
+        else return getCurrentServer().getFileSystem();
+    }
+    
+    public FileSystem getLocalFS() {
+    	return localFS;
+    }
 
     public Server getCurrentServer() {
         return currentServer;

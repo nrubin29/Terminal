@@ -1,7 +1,6 @@
 package me.nrubin29.terminal.cmd;
 
 import me.nrubin29.terminal.Terminal;
-import me.nrubin29.terminal.gui.GUI;
 import me.nrubin29.terminal.server.ServerManager;
 
 public class About extends Command {
@@ -12,14 +11,14 @@ public class About extends Command {
 
     public void run(String[] args) {
         if (ServerManager.getInstance().getCurrentServer() != null) {
-            Terminal.getInstance().getGUI().write("You can only use this command on your localhost.", GUI.MessageType.BAD);
+            Terminal.getInstance().write("You can only use this command on your localhost.", Terminal.MessageType.BAD);
             return;
         }
 
-        Terminal.getInstance().getGUI().write("___ ____ ____ _  _ _ _  _ ____ _", GUI.MessageType.NORMAL);
-        Terminal.getInstance().getGUI().write(" |  |___ |__/ |\\/| | |\\ | |__| |", GUI.MessageType.NORMAL);
-        Terminal.getInstance().getGUI().write(" |  |___ |  \\ |  | | | \\| |  | |___", GUI.MessageType.NORMAL);
-        Terminal.getInstance().getGUI().write("", GUI.MessageType.NORMAL);
-        Terminal.getInstance().getGUI().write("by Noah Rubin - v" + Terminal.VERSION, GUI.MessageType.NORMAL);
+        Terminal.getInstance().write("___ ____ ____ _  _ _ _  _ ____ _", Terminal.MessageType.NORMAL);
+        Terminal.getInstance().write(" |  |___ |__/ |\\/| | |\\ | |__| |", Terminal.MessageType.NORMAL);
+        Terminal.getInstance().write(" |  |___ |  \\ |  | | | \\| |  | |___", Terminal.MessageType.NORMAL);
+        Terminal.getInstance().write("", Terminal.MessageType.NORMAL);
+        Terminal.getInstance().write("by Noah Rubin - v" + Terminal.VERSION, Terminal.MessageType.NORMAL);
     }
 }

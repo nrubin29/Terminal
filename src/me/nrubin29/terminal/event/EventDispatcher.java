@@ -18,13 +18,23 @@ public class EventDispatcher {
         listeners.add(l);
     }
 
-    public void unregisterListener(Listener l) {
-        listeners.remove(l);
-    }
+    public boolean callEvent(Event e) {
+        boolean didCallEvent = false;
+        ArrayList<Listener> remove = new ArrayList<Listener>();
 
-    public void callEvent(Event e) {
         for (Listener l : listeners) {
-            if (l.getEventClass().equals(e.getClass())) l.onEvent(e);
+            if (l.getEventClass().equals(e.getClass())) {
+                l.onEvent(e);
+                didCallEvent = true;
+            }
         }
+
+        for (Listener l : listeners) {
+            if (l.shouldRemove()) remove.add(l);
+        }
+
+        listeners.removeAll(remove);
+
+        return didCallEvent;
     }
 }

@@ -1,7 +1,6 @@
 package me.nrubin29.terminal.cmd;
 
 import me.nrubin29.terminal.Terminal;
-import me.nrubin29.terminal.gui.GUI;
 import me.nrubin29.terminal.server.ServerManager;
 
 public class Disconnect extends Command {
@@ -12,13 +11,13 @@ public class Disconnect extends Command {
 
     public void run(String[] args) {
         if (ServerManager.getInstance().getCurrentServer() == null) {
-            Terminal.getInstance().getGUI().write("You are not connected to a server.", GUI.MessageType.BAD);
+            Terminal.getInstance().write("You are not connected to a server.", Terminal.MessageType.BAD);
             return;
         }
 
         ServerManager.getInstance().getCurrentServer().disconnect();
         ServerManager.getInstance().setCurrentServer(null);
 
-        Terminal.getInstance().getGUI().write("Disconnected.", GUI.MessageType.GOOD);
+        Terminal.getInstance().write("Disconnected.", Terminal.MessageType.GOOD);
     }
 }

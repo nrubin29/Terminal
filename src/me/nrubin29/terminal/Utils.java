@@ -1,7 +1,5 @@
 package me.nrubin29.terminal;
 
-import me.nrubin29.terminal.gui.GUI;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -21,13 +19,13 @@ public class Utils {
 
     public static ArrayList<String> readRemoteFile(String fileName) {
         try {
-            Terminal.getInstance().getGUI().write("Retrieving data from remote data server.", GUI.MessageType.NORMAL);
+            Terminal.getInstance().write("Retrieving data from remote data server.", Terminal.MessageType.NORMAL);
 
             URL url = new URL(BASE_URL + fileName + ".html");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
-            ArrayList<String> lines = new ArrayList<>();
+            ArrayList<String> lines = new ArrayList<String>();
 
             while (in.ready()) {
                 String line = in.readLine();
@@ -40,7 +38,7 @@ public class Utils {
             return lines;
         }
         catch (Exception e) {
-            Terminal.getInstance().getGUI().write("An error occurred while retrieving data from the remote data server.", GUI.MessageType.BAD);
+            Terminal.getInstance().write("An error occurred while retrieving data from the remote data server.", Terminal.MessageType.BAD);
             return null;
         }
     }
