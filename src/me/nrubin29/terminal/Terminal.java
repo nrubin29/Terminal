@@ -2,7 +2,7 @@ package me.nrubin29.terminal;
 
 import me.nrubin29.terminal.fs.FileSystem;
 import me.nrubin29.terminal.gui.GUI;
-import me.nrubin29.terminal.level.tutorial.Tutorial;
+import me.nrubin29.terminal.level.LevelManager;
 
 public class Terminal {
 
@@ -29,7 +29,9 @@ public class Terminal {
 
         gui.write("terminal booted successfully.", GUI.MessageType.NORMAL);
 
-        new Tutorial().start();
+        Utils.pause(Utils.SECOND);
+
+        LevelManager.getInstance().nextLevel();
     }
 
     public GUI getGUI() {

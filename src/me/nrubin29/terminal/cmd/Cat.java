@@ -19,7 +19,11 @@ public class Cat extends Command {
             return;
         }
 
-        FileSystem fs = ServerManager.getInstance().getCurrentServer().getFileSystem();
+        FileSystem fs;
+
+        if (ServerManager.getInstance().getCurrentServer() != null) fs = ServerManager.getInstance().getCurrentServer().getFileSystem();
+        else fs = Terminal.getInstance().getLocalFS();
+
         String file = args[0];
 
         for (FileSystemObject fso : fs.getCurrentFolder().getFiles()) {

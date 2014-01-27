@@ -18,6 +18,10 @@ public class EventDispatcher {
         listeners.add(l);
     }
 
+    public void unregisterListener(Listener l) {
+        listeners.remove(l);
+    }
+
     public void callEvent(Event e) {
         for (Listener l : listeners) {
             if (l.getEventClass().equals(e.getClass())) l.onEvent(e);

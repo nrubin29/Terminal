@@ -4,8 +4,7 @@ import me.nrubin29.terminal.Utils;
 import me.nrubin29.terminal.cmd.CommandParser;
 
 import javax.swing.*;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
+import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -33,39 +32,31 @@ public class GUI extends JFrame {
     }
 
     private JTextPane text;
-    private JTextField input;
+
+    private Filter f = new Filter();
 
     public GUI() {
         super("terminal");
 
         text = new JTextPane();
-        text.setEditable(false);
         text.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+        text.setForeground(Color.GREEN);
         text.setBackground(Color.BLACK);
         text.setCaretColor(Color.GREEN);
-
-        input = new JTextField();
-        input.setBorder(null);
-        input.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
-        input.setForeground(Color.GREEN);
-        input.setBackground(Color.BLACK);
-        input.setCaretColor(Color.GREEN);
-        input.setMinimumSize(new Dimension(640, 20));
-        input.setMaximumSize(new Dimension(640, 20));
-
-        input.addKeyListener(new KeyAdapter() {
+        text.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    final String in = input.getText();
+                if (e.getKeyCode() == KeyEvent.VK_UP) { e.consume(); }
+                else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    try {
+                        final String in = text.getText().split("\n")[text.getText().split("\n").length - 1];
 
-                    new Thread(new Runnable() {
-                        public void run() {
-                            write(in, MessageType.USER);
-                            CommandParser.getInstance().parse(in);
-                        }
-                    }).start();
-
-                    input.setText("");
+                        new Thread(new Runnable() {
+                            public void run() {
+                                CommandParser.getInstance().parse(in);
+                            }
+                        }).start();
+                    }
+                    catch (Exception ex) { ex.printStackTrace(); }
                 }
             }
         });
@@ -76,9 +67,7 @@ public class GUI extends JFrame {
         new SmartScroller(scroll);
 
         add(scroll);
-        add(input);
 
-        setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         setSize(640, 480);
         setResizable(false);
         setLocationRelativeTo(null);
@@ -86,19 +75,90 @@ public class GUI extends JFrame {
         setVisible(true);
     }
 
-    public void write(String txt, MessageType t) {
-        input.setEnabled(false);
+    public void write(String txt, MessageType t, boolean newLine) {
+        text.setFocusable(false);
+
+        ((AbstractDocument) text.getDocument()).setDocumentFilter(null);
+        text.setEditable(false);
 
         try {
             for (char c : txt.toCharArray()) {
                 text.getDocument().insertString(text.getDocument().getLength(), String.valueOf(c), t.getAttributes());
-                Utils.pause(30);
+                Utils.pause(20);
             }
-            text.getDocument().insertString(text.getDocument().getLength(), "\n", null);
+            if (newLine) text.getDocument().insertString(text.getDocument().getLength(), "\n", null);
         }
         catch (Exception ex) { ex.printStackTrace(); }
 
-        input.setEnabled(true);
-        input.requestFocusInWindow();
+        ((AbstractDocument) text.getDocument()).setDocumentFilter(f);
+        text.setEditable(true);
+        setCaret();
+
+        //setFocusable(false);
+        //setFocusable(true);
+        //requestFocus();
+        //text.requestFocusInWindow();
+
+        text.setFocusable(true);
+        text.requestFocusInWindow();
+    }
+
+    public void write(String txt, MessageType t) {
+        write(txt, t, true);
+    }
+
+    private class Filter extends DocumentFilter {
+        public void insertString(final FilterBypass fb, final int offset, final String string, final AttributeSet attr)
+                throws BadLocationException {
+            if (getLineStartOffset(getLineOfOffset(offset)) == getLineStartOffset(getLineOfOffset(text.getDocument().getLength()))) {
+                // if (getLineStartOffset(getLineOfOffset(offset)) + "terminal~ ".length() <= offset)
+                super.insertString(fb, text.getDocument().getLength(), string, MessageType.USER.getAttributes());
+            }
+            setCaret();
+        }
+
+        public void remove(final FilterBypass fb, final int offset, final int length) throws BadLocationException {
+            if (getLineStartOffset(getLineOfOffset(offset)) == getLineStartOffset(getLineOfOffset(text.getDocument().getLength()))) {
+                super.remove(fb, offset, length);
+            }
+            setCaret();
+        }
+
+        public void replace(final FilterBypass fb, final int offset, final int length, final String string, final AttributeSet attrs)
+                throws BadLocationException {
+            if (getLineStartOffset(getLineOfOffset(offset)) == getLineStartOffset(getLineOfOffset(text.getDocument().getLength()))) {
+                super.replace(fb, offset, length, string, MessageType.USER.getAttributes());
+            }
+            setCaret();
+        }
+    }
+
+    private int getLineOfOffset(int offset) throws BadLocationException {
+        Document doc = text.getDocument();
+        if (offset < 0) {
+            throw new BadLocationException("Can't translate offset to line", -1);
+        } else if (offset > doc.getLength()) {
+            throw new BadLocationException("Can't translate offset to line", doc.getLength() + 1);
+        } else {
+            Element map = doc.getDefaultRootElement();
+            return map.getElementIndex(offset);
+        }
+    }
+
+    private int getLineStartOffset(int line) throws BadLocationException {
+        Element map = text.getDocument().getDefaultRootElement();
+        if (line < 0) {
+            throw new BadLocationException("Negative line", -1);
+        } else if (line > map.getElementCount()) {
+            throw new BadLocationException("Given line too big", text.getDocument().getLength() + 1);
+        } else {
+            Element lineElem = map.getElement(line);
+            return lineElem.getStartOffset();
+        }
+    }
+
+    private void setCaret() {
+        try { text.setCaretPosition(text.getDocument().getLength()); }
+        catch (Exception e) { e.printStackTrace(); }
     }
 }
