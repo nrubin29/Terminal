@@ -1,19 +1,23 @@
 package me.nrubin29.terminal.server;
 
 import me.nrubin29.terminal.fs.FileSystem;
+import me.nrubin29.terminal.level.Level;
 
 import java.util.ArrayList;
 
 public abstract class Server {
 
+	protected Level level;
+	
     private final String ip;
-    private final FileSystem fs;
+    protected final FileSystem fs;
 
     private final ArrayList<String> users;
 
-    public Server(String ip) {
+    public Server(Level level, String ip) {
+    	this.level = level;
         this.ip = ip;
-        this.fs = setupFS();
+        this.fs = new FileSystem();
         this.users = new ArrayList<String>();
     }
 
@@ -25,8 +29,6 @@ public abstract class Server {
         users.add(username);
     }
 
-    public abstract FileSystem setupFS();
-
     public final String getIP() {
         return ip;
     }
@@ -37,5 +39,8 @@ public abstract class Server {
 
     public void connect() { }
 
+    /*
+     * TODO: Stop trace.
+     */
     public void disconnect() { }
 }

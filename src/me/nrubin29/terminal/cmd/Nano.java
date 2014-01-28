@@ -35,7 +35,7 @@ public class Nano extends Command {
 
                     ((TextFile) fso).setText(text);
 
-                    Terminal.getInstance().write("Set text to " + text, Terminal.MessageType.GOOD);
+                    Terminal.getInstance().write("Set text to " + text, Terminal.MessageType.NORMAL);
                 }
 
                 else if (fso instanceof File) {

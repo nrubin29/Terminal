@@ -19,16 +19,19 @@ public class CommandParser {
 
     public void setup() {
         cmds.add(new About());
+        cmds.add(new Answer());
         cmds.add(new AptGet());
         cmds.add(new Cat());
         cmds.add(new ChangeDirectory());
         cmds.add(new Disconnect());
         cmds.add(new Download());
         cmds.add(new Help());
+        cmds.add(new Hint());
         cmds.add(new List());
         cmds.add(new Nano());
         cmds.add(new News());
         cmds.add(new Ping());
+        cmds.add(new Remove());
         cmds.add(new Send());
         cmds.add(new SSH());
         cmds.add(new Trace());

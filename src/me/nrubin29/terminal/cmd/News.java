@@ -22,7 +22,7 @@ public class News extends Command {
 
         if (lines != null) {
             for (String line : lines) {
-                if (!line.equals("<END>")) Terminal.getInstance().write(line, Terminal.MessageType.MESSAGE);
+                if (!line.equals("<END>")) Terminal.getInstance().write(line, Terminal.MessageType.GOVT);
                 else break;
             }
         }

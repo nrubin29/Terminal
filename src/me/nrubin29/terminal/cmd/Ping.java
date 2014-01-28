@@ -16,7 +16,7 @@ public class Ping extends Command {
         }
 
         if (WebManager.getInstance().exists(args[0])) {
-            Terminal.getInstance().write("PING " + args[0] + " (" + WebManager.getInstance().getWebsite(args[0]).getIP() + "): SUCCESS.", Terminal.MessageType.GOOD);
+            Terminal.getInstance().write("PING " + args[0] + " (" + WebManager.getInstance().getWebsite(args[0]).getIP() + "): SUCCESS.", Terminal.MessageType.NORMAL);
         }
 
         else {

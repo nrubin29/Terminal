@@ -28,7 +28,7 @@ public class Web extends Command {
             return;
         }
 
-        Terminal.getInstance().write(WebManager.getInstance().getWebsite(args[0]).getContents(), Terminal.MessageType.MESSAGE);
+        Terminal.getInstance().write(WebManager.getInstance().getWebsite(args[0]).getContents(), Terminal.MessageType.GOVT);
 
         EventDispatcher.getInstance().callEvent(new WebEvent(WebManager.getInstance().getWebsite(args[0])));
     }

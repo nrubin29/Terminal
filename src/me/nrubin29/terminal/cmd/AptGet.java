@@ -43,7 +43,7 @@ public class AptGet extends Command {
 
         programs.put(args[0], true);
 
-        Terminal.getInstance().write("Installed " + args[0] + ".", Terminal.MessageType.GOOD);
+        Terminal.getInstance().write("Installed " + args[0] + ".", Terminal.MessageType.NORMAL);
 
         EventDispatcher.getInstance().callEvent(new ApplicationInstallEvent(args[0]));
     }

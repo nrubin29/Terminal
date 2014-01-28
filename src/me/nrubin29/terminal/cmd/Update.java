@@ -36,7 +36,7 @@ public class Update extends Command {
                 fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
                 fos.close();
 
-                Terminal.getInstance().write("Download successful! Quitting in five seconds...", Terminal.MessageType.GOOD);
+                Terminal.getInstance().write("Download successful! Quitting in five seconds...", Terminal.MessageType.NORMAL);
 
                 Utils.pause(Utils.SECOND * 5);
 
@@ -48,6 +48,6 @@ public class Update extends Command {
             }
         }
 
-        else Terminal.getInstance().write("You are up to date.", Terminal.MessageType.GOOD);
+        else Terminal.getInstance().write("You are up to date.", Terminal.MessageType.NORMAL);
     }
 }

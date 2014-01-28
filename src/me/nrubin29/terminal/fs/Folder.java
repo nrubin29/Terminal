@@ -16,8 +16,16 @@ public class Folder extends FileSystemObject {
         return objs.toArray(new FileSystemObject[objs.size()]);
     }
 
-    public final void addFileSystemObject(FileSystemObject fso) {
+    public final void addFile(FileSystemObject fso) {
         objs.add(fso);
+    }
+
+    public final void removeFile(FileSystemObject fso) {
+        objs.remove(fso);
+    }
+
+    public final boolean containsFile(FileSystemObject fso) {
+        return objs.contains(fso);
     }
 
     public void open() {

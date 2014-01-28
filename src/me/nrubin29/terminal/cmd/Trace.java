@@ -12,7 +12,7 @@ public class Trace extends Command {
 
     private int trace = -1;
     private Thread thread;
-    private boolean shouldRun = true;
+    private boolean shouldRun;
 
     public void run(String[] args) {
         if (ServerManager.getInstance().getCurrentServer() == null) {
@@ -30,18 +30,21 @@ public class Trace extends Command {
 
     public void startTrace(int time) {
         this.trace = time;
+        this.shouldRun = true;
 
         this.thread = new Thread(new Runnable() {
             public void run() {
-                while (trace > 0 && shouldRun) {
-                    trace--;
+            	while (trace > 0 && shouldRun) {
+                	trace--;
                     Utils.pause(Utils.SECOND);
                 }
 
-                ServerManager.getInstance().getCurrentServer().disconnect();
-                ServerManager.getInstance().setCurrentServer(null);
+                if (ServerManager.getInstance().getCurrentServer() != null) {
+                    ServerManager.getInstance().getCurrentServer().disconnect();
+                    ServerManager.getInstance().setCurrentServer(null);
 
-                Terminal.getInstance().write("You have been traced. You were kicked from the server.", Terminal.MessageType.BAD);
+                    Terminal.getInstance().write("You have been traced. You were kicked from the server.", Terminal.MessageType.BAD);
+                }
 
                 trace = -1;
             }

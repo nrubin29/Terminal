@@ -1,6 +1,6 @@
 package me.nrubin29.terminal.event;
 
-public abstract class Listener {
+public abstract class Listener<T extends Event> {
 
     private final Class<? extends Event> eventClass;
 
@@ -22,5 +22,5 @@ public abstract class Listener {
         this.shouldRemove = true;
     }
 
-    public abstract void onEvent(Event event);
+    public abstract void onEvent(T event);
 }

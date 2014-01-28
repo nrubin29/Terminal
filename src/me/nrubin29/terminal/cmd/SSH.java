@@ -50,7 +50,7 @@ public class SSH extends Command {
             return;
         }
 
-        Terminal.getInstance().write("Login successful.", Terminal.MessageType.GOOD);
+        Terminal.getInstance().write("Login successful.", Terminal.MessageType.NORMAL);
 
         Utils.pause(Utils.SECOND);
 

@@ -1,6 +1,8 @@
 package me.nrubin29.terminal.cmd;
 
 import me.nrubin29.terminal.Terminal;
+import me.nrubin29.terminal.event.DisconnectEvent;
+import me.nrubin29.terminal.event.EventDispatcher;
 import me.nrubin29.terminal.server.ServerManager;
 
 public class Disconnect extends Command {
@@ -20,6 +22,8 @@ public class Disconnect extends Command {
 
         ((Trace) (CommandParser.getInstance().getCommand("trace"))).stopTrace();
 
-        Terminal.getInstance().write("Disconnected.", Terminal.MessageType.GOOD);
+        Terminal.getInstance().write("Disconnected.", Terminal.MessageType.NORMAL);
+
+        EventDispatcher.getInstance().callEvent(new DisconnectEvent());
     }
 }

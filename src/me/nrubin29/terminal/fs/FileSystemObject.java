@@ -10,7 +10,7 @@ public abstract class FileSystemObject {
         this.name = name;
         this.parent = parent;
 
-        if (parent != null) parent.addFileSystemObject(this);
+        if (parent != null) parent.addFile(this);
     }
 
     public final String getName() {

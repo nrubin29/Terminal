@@ -61,7 +61,7 @@ public class Send extends Command {
 
                     Utils.pause(Utils.SECOND);
 
-                    Terminal.getInstance().write("File sent successfully.", Terminal.MessageType.GOOD);
+                    Terminal.getInstance().write("File sent successfully.", Terminal.MessageType.NORMAL);
 
                     EventDispatcher.getInstance().callEvent(new FileSendEvent((File) fso, email));
                 }

@@ -35,11 +35,11 @@ public class Download extends Command {
                     Utils.pause(Utils.SECOND);
 
                     /*
-                     * TODO: Remove this file.
+                     * TODO: Remove this file at the end of the level.
                      */
-                    ServerManager.getInstance().getLocalFS().getRootFolder().addFileSystemObject(fso);
+                    ServerManager.getInstance().getLocalFS().getRootFolder().addFile(fso);
 
-                    Terminal.getInstance().write("Download successful.", Terminal.MessageType.GOOD);
+                    Terminal.getInstance().write("Download successful.", Terminal.MessageType.NORMAL);
                 }
 
                 else {

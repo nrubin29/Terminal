@@ -16,11 +16,11 @@ public class Terminal extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	public enum MessageType {
-        GOOD(Color.WHITE),
+		NORMAL(Color.GREEN),
         BAD(Color.RED),
-        NORMAL(Color.GREEN),
 
-        MESSAGE(Color.ORANGE),
+        GOVT(Color.ORANGE),
+        HACK(Color.WHITE),
         USER(Color.CYAN);
 
         private SimpleAttributeSet attributes;
@@ -41,7 +41,7 @@ public class Terminal extends JFrame {
 		return instance;
 	}
 	
-	public static final String VERSION = "g3s2";
+	public static final String VERSION = "g4s3";
 
     private JTextPane text;
     private Filter f = new Filter();

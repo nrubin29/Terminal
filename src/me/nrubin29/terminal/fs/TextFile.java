@@ -21,6 +21,6 @@ public class TextFile extends File {
     }
 
     public void open() {
-        Terminal.getInstance().write(text, Terminal.MessageType.MESSAGE);
+        Terminal.getInstance().write(text, Terminal.MessageType.GOVT);
     }
 }

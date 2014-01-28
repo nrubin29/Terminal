@@ -29,6 +29,10 @@ public class LevelManager {
 
         index = 0;
     }
+    
+    public Level getCurrentLevel() {
+    	return currentLevel;
+    }
 
     public Level[] getLevels() {
         return levels.toArray(new Level[levels.size()]);
@@ -70,7 +74,7 @@ public class LevelManager {
             Terminal.getInstance().write(
                     "Congratulations! You beat all the levels in Terminal so far. " +
                     "Use the update command from your localhost to check for an update; there may be more levels. - N"
-                    , Terminal.MessageType.GOOD);
+                    , Terminal.MessageType.NORMAL);
         }
 
         else {

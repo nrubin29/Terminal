@@ -2,21 +2,20 @@ package me.nrubin29.terminal.cmd;
 
 import me.nrubin29.terminal.Terminal;
 import me.nrubin29.terminal.event.EventDispatcher;
-import me.nrubin29.terminal.event.FileReadEvent;
+import me.nrubin29.terminal.event.FileRemovePreEvent;
 import me.nrubin29.terminal.fs.File;
 import me.nrubin29.terminal.fs.FileSystemObject;
-import me.nrubin29.terminal.fs.TextFile;
 import me.nrubin29.terminal.server.ServerManager;
 
-public class Cat extends Command {
+public class Remove extends Command {
 
-    public Cat() {
-        super("cat", "Print the contents of a file.");
+    public Remove() {
+        super("rm", "Remove a file.");
     }
 
     public void run(String[] args) {
         if (args.length == 0) {
-            Terminal.getInstance().write("Usage: cat filename", Terminal.MessageType.BAD);
+            Terminal.getInstance().write("Usage: rm filename", Terminal.MessageType.BAD);
             return;
         }
 
@@ -24,18 +23,19 @@ public class Cat extends Command {
 
         for (FileSystemObject fso : ServerManager.getInstance().getCurrentFS().getCurrentFolder().getFiles()) {
             if (fso.getName().equalsIgnoreCase(file)) {
-                if (fso instanceof TextFile) {
-                    fso.open();
-                    
-                    EventDispatcher.getInstance().callEvent(new FileReadEvent((TextFile) fso));
-                }
+                if (fso instanceof File) {
+                    FileRemovePreEvent event = new FileRemovePreEvent((File) fso);
 
-                else if (fso instanceof File) {
-                    Terminal.getInstance().write("Cannot read this type of file.", Terminal.MessageType.BAD);
+                    EventDispatcher.getInstance().callEvent(event);
+
+                    if (!event.isCanceled()) {
+                        fso.getParent().removeFile(fso);
+                        Terminal.getInstance().write("Deleted file.", Terminal.MessageType.NORMAL);
+                    }
                 }
 
                 else {
-                    Terminal.getInstance().write("Attempted to read folder.", Terminal.MessageType.BAD);
+                    Terminal.getInstance().write("Attempted to remove folder.", Terminal.MessageType.BAD);
                 }
 
                 return;
