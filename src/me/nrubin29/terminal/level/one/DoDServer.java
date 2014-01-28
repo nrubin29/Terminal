@@ -4,15 +4,10 @@ import me.nrubin29.terminal.Terminal;
 import me.nrubin29.terminal.Utils;
 import me.nrubin29.terminal.cmd.AptGet;
 import me.nrubin29.terminal.cmd.CommandParser;
-import me.nrubin29.terminal.event.Event;
-import me.nrubin29.terminal.event.EventDispatcher;
-import me.nrubin29.terminal.event.FileSendEvent;
-import me.nrubin29.terminal.event.Listener;
 import me.nrubin29.terminal.fs.File;
 import me.nrubin29.terminal.fs.FileSystem;
 import me.nrubin29.terminal.fs.Folder;
 import me.nrubin29.terminal.fs.TextFile;
-import me.nrubin29.terminal.level.LevelManager;
 import me.nrubin29.terminal.server.Server;
 
 public class DoDServer extends Server {
@@ -21,23 +16,6 @@ public class DoDServer extends Server {
         super("284.dod");
 
         addUser("govt");
-
-        EventDispatcher.getInstance().registerListener(new Listener(FileSendEvent.class) {
-            public void onEvent(Event event) {
-                FileSendEvent e = (FileSendEvent) event;
-
-                if (e.getFile().getName().equals("hamburger.txt") && e.getTo().equals("validation@532.tutorial")) {
-                    Utils.pause(Utils.SECOND);
-
-                    Terminal.getInstance().write(
-                            "Congratulations, rookie. You have successfully completed training. Welcome aboard. - N"
-                            , Terminal.MessageType.MESSAGE);
-
-                    requestRemove();
-                    LevelManager.getInstance().nextLevel();
-                }
-            }
-        });
     }
 
     public FileSystem setupFS() {

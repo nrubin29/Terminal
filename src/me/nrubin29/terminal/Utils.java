@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Utils {
 
     public static final int SECOND = 1000;
+    public static final int MINUTE = SECOND * 60;
 
     public static void pause(int millis) {
         try { Thread.sleep(millis); }

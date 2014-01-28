@@ -18,6 +18,8 @@ public class Disconnect extends Command {
         ServerManager.getInstance().getCurrentServer().disconnect();
         ServerManager.getInstance().setCurrentServer(null);
 
+        ((Trace) (CommandParser.getInstance().getCommand("trace"))).stopTrace();
+
         Terminal.getInstance().write("Disconnected.", Terminal.MessageType.GOOD);
     }
 }

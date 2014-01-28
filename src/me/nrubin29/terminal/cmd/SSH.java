@@ -2,6 +2,8 @@ package me.nrubin29.terminal.cmd;
 
 import me.nrubin29.terminal.Terminal;
 import me.nrubin29.terminal.Utils;
+import me.nrubin29.terminal.event.EventDispatcher;
+import me.nrubin29.terminal.event.LoginFailEvent;
 import me.nrubin29.terminal.server.Server;
 import me.nrubin29.terminal.server.ServerManager;
 
@@ -42,6 +44,9 @@ public class SSH extends Command {
 
         if (!server.login(user)) {
             Terminal.getInstance().write("Server rejected login for username " + user + ".", Terminal.MessageType.BAD);
+
+            EventDispatcher.getInstance().callEvent(new LoginFailEvent(user));
+
             return;
         }
 

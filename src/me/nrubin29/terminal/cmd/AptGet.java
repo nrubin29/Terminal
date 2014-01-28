@@ -2,6 +2,8 @@ package me.nrubin29.terminal.cmd;
 
 import me.nrubin29.terminal.Terminal;
 import me.nrubin29.terminal.Utils;
+import me.nrubin29.terminal.event.ApplicationInstallEvent;
+import me.nrubin29.terminal.event.EventDispatcher;
 import me.nrubin29.terminal.server.ServerManager;
 
 import java.util.HashMap;
@@ -42,6 +44,8 @@ public class AptGet extends Command {
         programs.put(args[0], true);
 
         Terminal.getInstance().write("Installed " + args[0] + ".", Terminal.MessageType.GOOD);
+
+        EventDispatcher.getInstance().callEvent(new ApplicationInstallEvent(args[0]));
     }
 
     public boolean isInstalled(String program) {

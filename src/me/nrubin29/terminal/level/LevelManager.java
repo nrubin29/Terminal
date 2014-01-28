@@ -4,6 +4,7 @@ import me.nrubin29.terminal.Terminal;
 import me.nrubin29.terminal.Utils;
 import me.nrubin29.terminal.level.one.One;
 import me.nrubin29.terminal.level.tutorial.Tutorial;
+import me.nrubin29.terminal.level.two.Two;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,7 @@ public class LevelManager {
     private void setup() {
         levels.add(new Tutorial());
     	levels.add(new One());
+        levels.add(new Two());
 
         index = 0;
     }

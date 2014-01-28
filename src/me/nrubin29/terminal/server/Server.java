@@ -35,9 +35,7 @@ public abstract class Server {
         return fs;
     }
 
-    public abstract void connect();
+    public void connect() { }
 
-    public void disconnect() {
-
-    }
+    public void disconnect() { }
 }

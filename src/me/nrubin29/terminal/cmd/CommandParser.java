@@ -31,6 +31,7 @@ public class CommandParser {
         cmds.add(new Ping());
         cmds.add(new Send());
         cmds.add(new SSH());
+        cmds.add(new Trace());
         cmds.add(new Update());
         cmds.add(new Web());
     }
@@ -59,7 +60,7 @@ public class CommandParser {
         return null;
     }
 
-    protected Command[] getCommands() {
+    public Command[] getCommands() {
         return cmds.toArray(new Command[cmds.size()]);
     }
 }
