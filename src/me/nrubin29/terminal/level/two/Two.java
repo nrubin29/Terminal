@@ -16,8 +16,33 @@ public class Two extends Level {
         super("HackingGroup");
         
         addCheckpoint(
-                "Hints and answers for this level coming soon.",
-                "Hints and answers for this level coming soon."
+                "The first thing you need to do is install the tracker program called govt-tracker. You know how to do that.",
+                "apt-get govt-tracker"
+        );
+
+        addCheckpoint(
+                "Now you can connect to the server. Use the information provided in the briefing to figure out the username and IP address.",
+                "ssh dave@29.prismsec"
+        );
+
+        addCheckpoint(
+                "You can't connect as Dave until you whitelist your IP. Connect to the server using the webserver username. Shouldn't be hard to guess.",
+                "ssh web@29.prismsec"
+        );
+
+        addCheckpoint(
+                "Now that you're in, you need to replace the index.html contents with the script given above. First, you need to read the file to get the URL. Finally, disconnect and navigate to the website with the web command.",
+                "ls\ncd var\nls\ncd www\nls\nnano index.html ftp connect:~/db stmnt:INSERT 829.govt INTO whitelist\ndisconnect\nweb prism.sec"
+        );
+
+        addCheckpoint(
+                "Now that the script ran, try connecting again as David.",
+                "ssh dave@29.prismsec"
+        );
+
+        addCheckpoint(
+                "All you need to do now is find the backup file, download it, and delete it. Finally, disconnect before the trace finishes. Don't forget you can delete files with rm.",
+                "ls\ncd bak\nls\ndownload backup.bak\nrm backup.bak\ndisconnect"
         );
     }
 
@@ -28,15 +53,15 @@ public class Two extends Level {
     + Add script to index.
     + Open url with web command; ip added to database.
     + Connect; successful.
-    Download and delete files.
-    Disconnect.
+    + Download and delete backup.
+    + Disconnect.
      */
     public void start() {
     	super.start();
     	
         Terminal.getInstance().write(
-                "Alright, time for a real challange. You may have heard of PrismSec, a hacking group that calls themselves a security firm. " +
-                "Their leader, Dave Edge, and the other 28 members commit acts of cyber terrorism every day. " +
+                "Alright, time for a real challenge. You may have heard of PrismSec, a hacking group that calls themselves a security firm. " +
+                "Their leader, Dave Edge, and the other 28 members commit acts of cyberterrorism every day. " +
                 "They were recently hacked by a rival and we think that we can hack them as well. They have information vital to this country's security. " +
                 "We want you to hack this server and download, then delete, their latest backup. Before you do anything, we need you to install a tracker program. " +
                 "Please install govt-tracker so we can monitor you outside of our network. Once you install it, connect to the server. - N"
@@ -62,6 +87,8 @@ public class Two extends Level {
                         cmd.setEnabled(true);
                     }
 
+                    nextCheckpoint();
+
                     requestRemove();
                 }
             }
@@ -76,6 +103,11 @@ public class Two extends Level {
                             "The website should be running off the same server that we tried connecting to, just under a different account. " +
                             "If you can get in, we'll tell you what to do next. - N"
                             , Terminal.MessageType.GOVT);
+
+                    /*
+                    NOTE: This could cause a problem if someone tries connecting as Dave multiple times.
+                     */
+                    nextCheckpoint();
                 }
             }
         });
@@ -85,6 +117,7 @@ public class Two extends Level {
         		if (e.getWebsite().getUrl().equalsIgnoreCase("prism.sec") && e.getWebsite().getContents().equalsIgnoreCase("ftp connect:~/db stmnt:INSERT 829.govt INTO whitelist ")) {
         			Terminal.getInstance().write("Script ran successfully.", Terminal.MessageType.NORMAL);
         			server.scriptRan = true;
+                    nextCheckpoint();
                     requestRemove();
         		}
         	}
@@ -92,7 +125,7 @@ public class Two extends Level {
 
         EventDispatcher.getInstance().registerListener(new Listener<FileRemovePreEvent>(FileRemovePreEvent.class) {
             public void onEvent(FileRemovePreEvent e) {
-                if (e.getFile().getName().startsWith("backup") && e.getFile().getName().endsWith(".bak")) {
+                if (e.getFile().getName().equals("backup.bak")) {
                     if (!ServerManager.getInstance().getLocalFS().getRootFolder().containsFile(e.getFile())) {
                         Terminal.getInstance().write("You need to download the file first!", Terminal.MessageType.BAD);
                         e.setCanceled(true);
